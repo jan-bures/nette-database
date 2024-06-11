@@ -654,7 +654,7 @@ class Selection implements \Iterator, IRowContainer, \ArrayAccess, \Countable
 		}
 
 		$key[] = $trace;
-		return $this->generalCacheKey = md5(serialize($key));
+		return $this->generalCacheKey = hash('xxh128', serialize($key));
 	}
 
 
