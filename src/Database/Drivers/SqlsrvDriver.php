@@ -17,7 +17,7 @@ use Nette;
  */
 class SqlsrvDriver implements Nette\Database\Driver
 {
-	private Nette\Database\Connection $connection;
+	protected Nette\Database\Connection $connection;
 	private string $version;
 
 
