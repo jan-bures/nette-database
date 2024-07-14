@@ -1,5 +1,5 @@
 {
-	"name": "nette/database",
+	"name": "jan-bures/nette-database",
 	"description": "💾 Nette Database: layer with a familiar PDO-like API but much more powerful. Building queries, advanced joins, drivers for MySQL, PostgreSQL, SQLite, MS SQL Server and Oracle.",
 	"keywords": ["nette", "database", "notorm", "queries", "pdo", "mysql", "postgresql", "sqlite", "mssql", "oracle"],
 	"homepage": "https://nette.org",
