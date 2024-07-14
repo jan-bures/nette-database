@@ -45,7 +45,7 @@ class GroupedSelection extends Selection
 		?Nette\Caching\Storage $cacheStorage = null,
 	) {
 		$this->refTable = $refTable;
-		$this->column = $column;
+		$this->column = $column !== null ? mb_strtolower($column) : null;
 		parent::__construct($explorer, $conventions, $tableName, $cacheStorage);
 	}
 

@@ -254,6 +254,8 @@ class ActiveRow implements \IteratorAggregate, IRow
 	 */
 	public function &__get(string $key): mixed
 	{
+		$key = $key !== null ? mb_strtolower($key) : null;
+
 		if ($this->accessColumn($key)) {
 			return $this->data[$key];
 		}
@@ -272,6 +274,8 @@ class ActiveRow implements \IteratorAggregate, IRow
 
 	public function __isset(string $key): bool
 	{
+		$key = $key !== null ? mb_strtolower($key) : null;
+
 		if ($this->accessColumn($key)) {
 			return isset($this->data[$key]);
 		}

@@ -807,7 +807,7 @@ class Selection implements \Iterator, IRowContainer, \ArrayAccess, \Countable
 		} elseif ($primaryAutoincrementKey) {
 			$primaryKey[$primaryAutoincrementKey] = $this->explorer->getInsertId($primarySequenceName);
 
-		// Multi column primary without autoincrement
+		// Multi-column primary without autoincrement
 		} elseif (is_array($this->primary)) {
 			foreach ($this->primary as $key) {
 				if (!isset($data[$key])) {
@@ -893,6 +893,8 @@ class Selection implements \Iterator, IRowContainer, \ArrayAccess, \Countable
 
 			[$table, $column] = $belongsTo;
 		}
+
+		$column = $column !== null ? mb_strtolower($column) : null;
 
 		if (!$row->accessColumn($column)) {
 			return false;

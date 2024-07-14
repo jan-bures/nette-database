@@ -45,6 +45,7 @@ class Row extends Nette\Utils\ArrayHash implements IRow
 			return current($arr);
 		}
 
+		$key = $key !== null ? mb_strtolower($key) : null;
 		return $this->$key;
 	}
 
@@ -59,6 +60,7 @@ class Row extends Nette\Utils\ArrayHash implements IRow
 			return (bool) current(array_slice((array) $this, $key, 1));
 		}
 
+		$key = $key !== null ? mb_strtolower($key) : null;
 		return parent::offsetExists($key);
 	}
 }
