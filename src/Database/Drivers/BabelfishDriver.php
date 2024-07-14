@@ -4,16 +4,25 @@ declare(strict_types=1);
 
 namespace Nette\Database\Drivers;
 
+use Nette;
+
 /**
  * Babelfish 4.1.0 and later database driver.
  */
 class BabelfishDriver extends SqlsrvDriver
 {
-    #[\Override]
-    public function getColumns(string $table): array
-    {
-        $columns = [];
-        foreach ($this->connection->query(<<<X
+	#[\Override]
+	public function initialize(Nette\Database\Connection $connection, array $options): void
+	{
+		parent::initialize($connection, $options);
+		$connection->getPdo()->setAttribute(\PDO::ATTR_CASE, \PDO::CASE_LOWER);
+	}
+
+	#[\Override]
+	public function getColumns(string $table): array
+	{
+		$columns = [];
+		foreach ($this->connection->query(<<<X
 			SELECT
 				c.name AS name,
 				o.name AS [table],
@@ -41,15 +50,15 @@ class BabelfishDriver extends SqlsrvDriver
 				o.type IN ('U', 'V')
 				AND o.name = {$this->connection->quote($table)}
 			X) as $row) {
-            $row = (array) $row;
-            $row['vendor'] = $row;
-            $row['nullable'] = (bool) $row['nullable'];
-            $row['autoincrement'] = (bool) $row['autoincrement'];
-            $row['primary'] = (bool) $row['primary'];
+			$row = (array) $row;
+			$row['vendor'] = $row;
+			$row['nullable'] = (bool) $row['nullable'];
+			$row['autoincrement'] = (bool) $row['autoincrement'];
+			$row['primary'] = (bool) $row['primary'];
 
-            $columns[] = $row;
-        }
+			$columns[] = $row;
+		}
 
-        return $columns;
-    }
+		return $columns;
+	}
 }
