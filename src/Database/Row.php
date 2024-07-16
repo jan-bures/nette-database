@@ -17,8 +17,14 @@ use Nette;
  */
 class Row extends Nette\Utils\ArrayHash implements IRow
 {
-	public function __get(mixed $key): never
+	public function __get(mixed $key)
 	{
+		$key = is_string($key) ? mb_strtolower($key) : $key;
+
+		if (isset($this->$key)) {
+			return $this->$key;
+		}
+
 		$hint = Nette\Utils\Helpers::getSuggestion(array_map('strval', array_keys((array) $this)), $key);
 		throw new Nette\MemberAccessException("Cannot read an undeclared column '$key'" . ($hint ? ", did you mean '$hint'?" : '.'));
 	}
@@ -26,7 +32,8 @@ class Row extends Nette\Utils\ArrayHash implements IRow
 
 	public function __isset(string $key): bool
 	{
-		return isset($this->key);
+		$key = mb_strtolower($key);
+		return isset($this->$key);
 	}
 
 
@@ -36,8 +43,6 @@ class Row extends Nette\Utils\ArrayHash implements IRow
 	 */
 	public function offsetGet($key): mixed
 	{
-		$key = $key !== null ? mb_strtolower($key) : null;
-
 		if (is_int($key)) {
 			$arr = array_slice((array) $this, $key, 1);
 			if (!$arr) {
@@ -58,8 +63,6 @@ class Row extends Nette\Utils\ArrayHash implements IRow
 	 */
 	public function offsetExists($key): bool
 	{
-		$key = $key !== null ? mb_strtolower($key) : null;
-
 		if (is_int($key)) {
 			return (bool) current(array_slice((array) $this, $key, 1));
 		}
