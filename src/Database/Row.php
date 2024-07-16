@@ -21,7 +21,7 @@ class Row extends Nette\Utils\ArrayHash implements IRow
 	{
 		$key = is_string($key) ? mb_strtolower($key) : $key;
 
-		if (isset($this->$key)) {
+		if (property_exists($this,$key)) {
 			return $this->$key;
 		}
 
@@ -33,7 +33,7 @@ class Row extends Nette\Utils\ArrayHash implements IRow
 	public function __isset(string $key): bool
 	{
 		$key = mb_strtolower($key);
-		return isset($this->$key);
+		return property_exists($this, $key);
 	}
 
 
