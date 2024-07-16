@@ -36,6 +36,8 @@ class Row extends Nette\Utils\ArrayHash implements IRow
 	 */
 	public function offsetGet($key): mixed
 	{
+		$key = $key !== null ? mb_strtolower($key) : null;
+
 		if (is_int($key)) {
 			$arr = array_slice((array) $this, $key, 1);
 			if (!$arr) {
@@ -56,6 +58,8 @@ class Row extends Nette\Utils\ArrayHash implements IRow
 	 */
 	public function offsetExists($key): bool
 	{
+		$key = $key !== null ? mb_strtolower($key) : null;
+
 		if (is_int($key)) {
 			return (bool) current(array_slice((array) $this, $key, 1));
 		}
